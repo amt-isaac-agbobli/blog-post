@@ -1,7 +1,7 @@
 package com.isaac.blogpost.repository;
 
-import com.isaac.blogpost.entity.User;
+import com.isaac.blogpost.entity.PasswordResetToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ResetPasswordRepository extends JpaRepository<ResetPasswordRepository, Long> {
+public interface PasswordResetRepository extends JpaRepository<PasswordResetToken, Long> {
 }
