@@ -30,7 +30,7 @@ public class JwtServiceImpl implements JwtService {
                     .verify(token)
                     .getSubject();
         } catch (JWTVerificationException e) {
-          throw new HttpException("Invalid token", 400);
+          throw new HttpException(e.getMessage(), 401);
         }
     }
 
