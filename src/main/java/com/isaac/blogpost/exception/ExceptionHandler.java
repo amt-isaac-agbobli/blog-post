@@ -1,4 +1,4 @@
-package com.isaac.sharehubapi.exception;
+package com.isaac.blogpost.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

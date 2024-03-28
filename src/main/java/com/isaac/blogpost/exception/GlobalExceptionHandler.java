@@ -1,4 +1,4 @@
-package com.isaac.sharehubapi.exception;
+package com.isaac.blogpost.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +26,10 @@ public class GlobalExceptionHandler {
         ExceptionHandler exceptionHandler = new ExceptionHandler(
                 httpException.getMessage(),
                 httpException.getCause(),
-                httpException.getHttpStatus()
+                HttpStatus.valueOf(httpException.getStatusCode())
         );
 
-        return new ResponseEntity<>(exceptionHandler, httpException.getHttpStatus());
+        return new ResponseEntity<>(exceptionHandler, HttpStatus.valueOf(httpException.getStatusCode()));
     }
 
     /**

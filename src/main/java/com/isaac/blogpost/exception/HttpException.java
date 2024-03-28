@@ -1,17 +1,17 @@
-package com.isaac.sharehubapi.exception;
+package com.isaac.blogpost.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
 public class HttpException  extends RuntimeException{
-    private final HttpStatus httpStatus;
-    public HttpException(String message, HttpStatus httpStatus) {
+    private final String statusCode;
+    public HttpException(String message, String statusCode) {
         super(message);
-        this.httpStatus = httpStatus;
+        this.statusCode = statusCode;
     }
-    public HttpException(String message, HttpStatus httpStatus, Throwable cause) {
+    public HttpException(String message, String statusCode, Throwable cause) {
         super(message, cause);
-        this.httpStatus = httpStatus;
+        this.statusCode = statusCode;
     }
 }
