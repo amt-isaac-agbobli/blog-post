@@ -5,12 +5,12 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public class HttpException  extends RuntimeException{
-    private final String statusCode;
-    public HttpException(String message, String statusCode) {
+    private final int statusCode;
+    public HttpException(String message, int statusCode) {
         super(message);
         this.statusCode = statusCode;
     }
-    public HttpException(String message, String statusCode, Throwable cause) {
+    public HttpException(String message, int statusCode, Throwable cause) {
         super(message, cause);
         this.statusCode = statusCode;
     }
