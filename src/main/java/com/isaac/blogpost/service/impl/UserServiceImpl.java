@@ -4,6 +4,6 @@ import com.isaac.blogpost.entity.User;
 
 import java.util.Optional;
 
-public interface UserService {
+public interface UserServiceImpl {
     Optional<User> findByEmail(String email);
 }

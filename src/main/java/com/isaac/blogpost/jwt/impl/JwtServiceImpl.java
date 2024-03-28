@@ -7,11 +7,12 @@ import com.isaac.blogpost.entity.User;
 import com.isaac.blogpost.exception.HttpException;
 import com.isaac.blogpost.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-
+@Service
 public class JwtServiceImpl implements JwtService {
 
     @Value("${api.security.token.secret}")
