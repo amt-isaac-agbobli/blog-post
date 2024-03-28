@@ -31,10 +31,10 @@ public class WebSecurityConfig {
                     req.requestMatchers(HttpMethod.POST, "/api/v1/auth/*").permitAll();
                     req.requestMatchers("/v3/api-docs/**").permitAll();
                     req.requestMatchers("/swagger-ui/**").permitAll();
+                    req.requestMatchers("/swagger-ui.html").permitAll();
                     req.requestMatchers("/admin/**").hasRole("ADMIN");
                     req.anyRequest().authenticated();
                 })
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
