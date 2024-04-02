@@ -32,7 +32,7 @@ public class UserController {
                 user.getRoles(),
                 user.getIsVerified()
         );
-        
+
         return ResponseEntity.ok().body(profile);
     }
 

@@ -1,4 +1,4 @@
-package com.isaac.blogpost;
+package com.isaac.blogpost.service;
 
 import com.isaac.blogpost.dto.request.CreatePostRequest;
 import com.isaac.blogpost.dto.response.PostResponse;
