@@ -9,6 +9,9 @@ import com.isaac.blogpost.service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class PostServiceImpl implements PostService {
@@ -27,5 +30,18 @@ public class PostServiceImpl implements PostService {
                 newPost.getTitle(),
                 newPost.getContent(),
                 newPost.getUser().getName());
+    }
+
+    @Override
+    public List<CreatePostResponse> getAllPosts() {
+        List<Post> posts = postRepository.findAll();
+        return mapToResponse(posts);
+    }
+
+    public  List<CreatePostResponse> mapToResponse(List<Post> posts) {
+        return posts.stream().map(post -> new CreatePostResponse(post.getId(),
+                post.getTitle(),
+                post.getContent(),
+                post.getUser().getName())).collect(Collectors.toList());
     }
 }

@@ -9,10 +9,9 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/post")
@@ -26,5 +25,10 @@ public class PostController {
                                                          Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return ResponseEntity.ok().body(postService.createPost(createPostRequest, user));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<CreatePostResponse>> getAllPosts() {
+        return ResponseEntity.ok().body(postService.getAllPosts());
     }
 }
