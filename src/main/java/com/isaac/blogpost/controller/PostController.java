@@ -50,4 +50,11 @@ public class PostController {
         User user = (User) authentication.getPrincipal();
         return ResponseEntity.ok().body(postService.updatePost(id, createPostRequest, user));
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deletePost(@Valid @PathVariable Long id, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        postService.deletePost(id, user);
+        return ResponseEntity.noContent().build();
+    }
 }

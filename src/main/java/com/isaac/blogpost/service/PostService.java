@@ -16,4 +16,6 @@ public interface PostService {
     List<PostResponse> getPostsByTitle(String title);
 
     PostResponse updatePost(Long id, CreatePostRequest createPostRequest, User user);
+
+    void deletePost(Long id, User user);
 }

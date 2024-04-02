@@ -70,6 +70,20 @@ public class PostServiceImpl implements PostService {
                 post.getUser().getName());
     }
 
+    @Override
+    public void deletePost(Long id, User user) {
+
+        Post post = postRepository.findById(id).orElse(null);
+        if (post == null) {
+            throw new HttpException("Post not found", 404);
+        }
+
+        if(!post.getUser().getId().equals(user.getId())){
+            throw new HttpException("You are not authorized to delete this post", 403);
+        }
+        postRepository.delete(post);
+    }
+
 
     private   List<PostResponse> mapToResponse(List<Post> posts) {
         return posts.stream().map(post -> new PostResponse(post.getId(),
