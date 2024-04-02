@@ -4,6 +4,7 @@ import com.isaac.blogpost.dto.request.CreatePostRequest;
 import com.isaac.blogpost.dto.response.PostResponse;
 import com.isaac.blogpost.entity.Post;
 import com.isaac.blogpost.entity.User;
+import com.isaac.blogpost.exception.HttpException;
 import com.isaac.blogpost.repository.PostRepository;
 import com.isaac.blogpost.service.PostService;
 import lombok.AllArgsConstructor;
@@ -49,6 +50,26 @@ public class PostServiceImpl implements PostService {
         List<Post> posts = postRepository.findByTitleContainingIgnoreCase(title);
         return mapToResponse(posts);
     }
+
+    @Override
+    public PostResponse updatePost(Long id, CreatePostRequest createPostRequest, User user) {
+        Post post = postRepository.findById(id).orElse(null);
+        if (post == null) {
+            throw new HttpException("Post not found", 404);
+        }
+
+        if (!post.getUser().getId().equals(user.getId())) {
+            throw new HttpException("You are not authorized to update this post", 403);
+        }
+        post.setContent(createPostRequest.content());
+        post.setTitle(createPostRequest.title());
+        postRepository.save(post);
+        return new PostResponse(post.getId(),
+                post.getTitle(),
+                post.getContent(),
+                post.getUser().getName());
+    }
+
 
     private   List<PostResponse> mapToResponse(List<Post> posts) {
         return posts.stream().map(post -> new PostResponse(post.getId(),

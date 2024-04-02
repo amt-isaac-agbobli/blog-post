@@ -14,4 +14,6 @@ public interface PostService {
     List<PostResponse> getPostsByUser(User user);
 
     List<PostResponse> getPostsByTitle(String title);
+
+    PostResponse updatePost(Long id, CreatePostRequest createPostRequest, User user);
 }

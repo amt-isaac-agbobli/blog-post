@@ -42,4 +42,12 @@ public class PostController {
     public ResponseEntity<List<PostResponse>> getPostsByTitle(@RequestParam String title) {
         return ResponseEntity.ok().body(postService.getPostsByTitle(title));
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<PostResponse> updatePost(@PathVariable Long id,
+                                                   @Valid @RequestBody CreatePostRequest createPostRequest,
+                                                   Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return ResponseEntity.ok().body(postService.updatePost(id, createPostRequest, user));
+    }
 }
