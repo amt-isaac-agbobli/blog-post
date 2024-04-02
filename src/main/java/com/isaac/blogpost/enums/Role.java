@@ -1,2 +1,6 @@
-package com.isaac.blogpost.enums;public enum Role {
+package com.isaac.blogpost.enums;
+
+public enum Role {
+    ROLE_USER,
+    ROLE_ADMIN
 }

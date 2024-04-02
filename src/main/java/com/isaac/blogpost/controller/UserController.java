@@ -27,6 +27,7 @@ public class UserController {
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
+                user.getRoles(),
                 user.getIsVerified()
         );
         return ResponseEntity.ok().body(profile);

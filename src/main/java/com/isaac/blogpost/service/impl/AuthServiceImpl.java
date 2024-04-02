@@ -5,6 +5,7 @@ import com.isaac.blogpost.dto.request.SignUpRequest;
 import com.isaac.blogpost.dto.response.SignInResponse;
 import com.isaac.blogpost.dto.response.SignUpResponse;
 import com.isaac.blogpost.entity.User;
+import com.isaac.blogpost.enums.Role;
 import com.isaac.blogpost.exception.HttpException;
 import com.isaac.blogpost.jwt.JwtService;
 import com.isaac.blogpost.repository.UserRepository;
@@ -22,6 +23,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+
     @Override
     public SignUpResponse signUp(SignUpRequest user) {
 
@@ -30,20 +32,21 @@ public class AuthServiceImpl implements AuthService {
             throw new HttpException("User with email " + user.email() + " already exists", 409);
         }
 
+
         User newUser = User.builder()
                 .email(user.email())
                 .name(user.name())
                 .isVerified(false)
+                .roles(Role.ROLE_USER)
                 .password(passwordEncoder.encode(user.password()))
                 .build();
         userRepository.save(newUser);
 
-
         return new SignUpResponse(newUser.getId(),
-                        newUser.getName(),
-                        newUser.getEmail(),
-                        newUser.getIsVerified());
-
+                newUser.getName(),
+                newUser.getEmail(),
+                newUser.getRoles(),
+                newUser.getIsVerified());
     }
 
     @Override
@@ -62,6 +65,7 @@ public class AuthServiceImpl implements AuthService {
         return new SignInResponse(userExit.getId(),
                 userExit.getName(),
                 userExit.getEmail(),
+                userExit.getRoles(),
                 userExit.getIsVerified(),
                 token);
     }
