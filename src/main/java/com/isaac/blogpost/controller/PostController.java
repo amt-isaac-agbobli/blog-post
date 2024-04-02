@@ -1,7 +1,7 @@
 package com.isaac.blogpost.controller;
 
 import com.isaac.blogpost.dto.request.CreatePostRequest;
-import com.isaac.blogpost.dto.response.CreatePostResponse;
+import com.isaac.blogpost.dto.response.PostResponse;
 import com.isaac.blogpost.entity.User;
 import com.isaac.blogpost.service.PostService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -21,14 +21,25 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/create")
-    public ResponseEntity<CreatePostResponse> createPost(@Valid @RequestBody CreatePostRequest createPostRequest,
-                                                         Authentication authentication) {
+    public ResponseEntity<PostResponse> createPost(@Valid @RequestBody CreatePostRequest createPostRequest,
+                                                   Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return ResponseEntity.ok().body(postService.createPost(createPostRequest, user));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<CreatePostResponse>> getAllPosts() {
+    public ResponseEntity<List<PostResponse>> getAllPosts() {
         return ResponseEntity.ok().body(postService.getAllPosts());
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<List<PostResponse>> getPostsByUser(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return ResponseEntity.ok().body(postService.getPostsByUser(user));
+    }
+
+    @GetMapping("/title")
+    public ResponseEntity<List<PostResponse>> getPostsByTitle(@RequestParam String title) {
+        return ResponseEntity.ok().body(postService.getPostsByTitle(title));
     }
 }

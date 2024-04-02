@@ -1,7 +1,7 @@
 package com.isaac.blogpost.service.impl;
 
 import com.isaac.blogpost.dto.request.CreatePostRequest;
-import com.isaac.blogpost.dto.response.CreatePostResponse;
+import com.isaac.blogpost.dto.response.PostResponse;
 import com.isaac.blogpost.entity.Post;
 import com.isaac.blogpost.entity.User;
 import com.isaac.blogpost.repository.PostRepository;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
-    public CreatePostResponse createPost(CreatePostRequest createPostRequest, User user) {
+    public PostResponse createPost(CreatePostRequest createPostRequest, User user) {
 
         Post newPost = Post.builder()
                 .content(createPostRequest.content())
@@ -26,20 +26,32 @@ public class PostServiceImpl implements PostService {
                 .build();
         postRepository.save(newPost);
 
-        return new CreatePostResponse(postRepository.save(newPost).getId(),
+        return new PostResponse(postRepository.save(newPost).getId(),
                 newPost.getTitle(),
                 newPost.getContent(),
                 newPost.getUser().getName());
     }
 
     @Override
-    public List<CreatePostResponse> getAllPosts() {
+    public List<PostResponse> getAllPosts() {
         List<Post> posts = postRepository.findAll();
         return mapToResponse(posts);
     }
 
-    public  List<CreatePostResponse> mapToResponse(List<Post> posts) {
-        return posts.stream().map(post -> new CreatePostResponse(post.getId(),
+    @Override
+    public List<PostResponse> getPostsByUser(User user) {
+        List<Post> posts = postRepository.findByUser(user);
+        return mapToResponse(posts);
+    }
+
+    @Override
+    public List<PostResponse> getPostsByTitle(String title) {
+        List<Post> posts = postRepository.findByTitleContainingIgnoreCase(title);
+        return mapToResponse(posts);
+    }
+
+    private   List<PostResponse> mapToResponse(List<Post> posts) {
+        return posts.stream().map(post -> new PostResponse(post.getId(),
                 post.getTitle(),
                 post.getContent(),
                 post.getUser().getName())).collect(Collectors.toList());

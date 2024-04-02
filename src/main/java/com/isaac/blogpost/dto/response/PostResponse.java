@@ -1,6 +1,6 @@
 package com.isaac.blogpost.dto.response;
 
-public record CreatePostResponse(
+public record PostResponse(
         Long id,
         String title,
         String content,
