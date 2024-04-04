@@ -1,5 +1,6 @@
 package com.isaac.blogpost.controller;
 
+import com.isaac.blogpost.controller.api.AuthApi;
 import com.isaac.blogpost.dto.request.SignInRequest;
 import com.isaac.blogpost.dto.request.SignUpRequest;
 import com.isaac.blogpost.dto.response.SignInResponse;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/auth")
-public class AuthController {
+public class AuthController implements AuthApi {
     private final AuthService authService;
 
     @PostMapping("/signup")
