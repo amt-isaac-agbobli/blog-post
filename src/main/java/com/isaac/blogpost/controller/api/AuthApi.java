@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name = "Auth Endpoints", description = """
     The `Auth API` is a crucial part of our application that handles all authentication-related operations. It provides endpoints for user registration and login, which are essential for maintaining user sessions and securing user data.
@@ -35,15 +34,11 @@ public interface AuthApi {
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Invalid request",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class))
+                    description = "Invalid request"
             ),
             @ApiResponse(
                     responseCode = "409",
-                    description = "User already exists",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class))
+                    description = "User already exists"
             )
     })
     @Operation(summary = "Sign up a new user", description = "Sign up a new user with email, name and password")
@@ -58,15 +53,11 @@ public interface AuthApi {
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Invalid request",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class))
+                    description = "Invalid request"
             ),
             @ApiResponse(
                     responseCode = "401",
-                    description = "Unauthorized",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class))
+                    description = "Unauthorized"
             )
     })
     @Operation(summary = "Sign in a user", description = "Sign in a user with email and password")
