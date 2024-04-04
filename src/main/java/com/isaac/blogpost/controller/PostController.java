@@ -1,5 +1,6 @@
 package com.isaac.blogpost.controller;
 
+import com.isaac.blogpost.controller.api.PostApi;
 import com.isaac.blogpost.dto.request.CreatePostRequest;
 import com.isaac.blogpost.dto.response.PostResponse;
 import com.isaac.blogpost.entity.User;
@@ -16,8 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/post")
 @AllArgsConstructor
-@SecurityRequirement(name = "bearer-key")
-public class PostController {
+public class PostController implements PostApi {
     private final PostService postService;
 
     @PostMapping("/create")

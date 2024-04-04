@@ -28,7 +28,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        try {
             String authorizationHeader = request.getHeader("Authorization");
             if (authorizationHeader == null || authorizationHeader.isBlank() || !authorizationHeader.startsWith("Bearer ")) {
                 response.sendError(401, "Authorization header is missing");
@@ -47,12 +46,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(auth);
 
             filterChain.doFilter(request, response);
-        } catch (HttpException e) {
-            response.sendError(e.getStatusCode(), e.getMessage());
-            throw new HttpException(e.getMessage(), e.getStatusCode());
-        } catch (Exception e) {
-            logger.error("Cannot set user authentication: {}", e);
-        }
+
     }
 
     @Override

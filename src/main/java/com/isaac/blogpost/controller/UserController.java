@@ -1,10 +1,13 @@
 package com.isaac.blogpost.controller;
 
+import com.isaac.blogpost.controller.api.UserApi;
 import com.isaac.blogpost.dto.request.UpdatePasswordRequest;
 import com.isaac.blogpost.dto.response.UserProfileResponse;
 import com.isaac.blogpost.entity.User;
 import com.isaac.blogpost.service.UserService;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -15,9 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/user")
-@SecurityRequirement(name = "bearer-key")
 @AllArgsConstructor
-public class UserController {
+public class UserController implements UserApi {
     private final UserService userService;
 
     @GetMapping("/profile")
@@ -38,7 +40,7 @@ public class UserController {
 
     @PutMapping("/update-password")
     public ResponseEntity<Void> updatePassword(Authentication authentication,
-                                               UpdatePasswordRequest updatePasswordRequest) {
+                                               @Valid @RequestBody UpdatePasswordRequest updatePasswordRequest) {
         User user = (User) authentication.getPrincipal();
         userService.updatePassword(updatePasswordRequest, user.getId());
         return ResponseEntity.noContent().build();
