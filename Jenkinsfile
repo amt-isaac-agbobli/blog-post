@@ -1,4 +1,3 @@
-
 //Slack Notification Integration
 def gitName = env.GIT_BRANCH
 def jobName = env.JOB_NAME
