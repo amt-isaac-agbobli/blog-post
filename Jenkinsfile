@@ -44,13 +44,13 @@ pipeline {
       }
     }
 
-    stage('Build Docker Image') {
-      steps {
-        script {
-          docker.build("blog-post-api")
-        }
-      }
-    }
+//     stage('Build Docker Image') {
+//       steps {
+//         script {
+//           docker.build("blog-post-api")
+//         }
+//       }
+//     }
 
     stage('Clean WS') {
       steps {
