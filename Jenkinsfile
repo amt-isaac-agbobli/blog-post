@@ -5,6 +5,7 @@ def branchName = env.BRANCH_NAME
 def main_branch = ['main', 'develop']
 
 // Environments Declaration
+//
 environment {
   jobName = env.JOB_NAME
   branchName = env.BRANCH_NAME
@@ -21,7 +22,7 @@ def buildSuccess = [
 // Failed Build
 def buildError = [
   [text: "Blog Post API Build Failed on ${branchName}",
-  fallback: "Task Manager API Build Failed on ${branchName}",
+  fallback: "Blog API Build Failed on ${branchName}",
   color: "#FF0000"
   ]
 ]
@@ -44,13 +45,13 @@ pipeline {
       }
     }
 
-//     stage('Build Docker Image') {
-//       steps {
-//         script {
-//           docker.build("blog-post-api")
-//         }
-//       }
-//     }
+    stage('Build Docker Image') {
+      steps {
+        script {
+          docker.build("blog-post-api")
+        }
+      }
+    }
 
     stage('Clean WS') {
       steps {
