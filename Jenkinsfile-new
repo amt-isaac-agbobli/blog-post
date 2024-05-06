@@ -33,33 +33,25 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-      sh 'mvn clean install -DskipTests'
+        sh 'chmod +x ./mvnw'
+        sh './mvnw wrapper:wrapper'
       }
     }
 
     stage('Run Tests') {
       steps {
-        sh 'mvn test'
+        sh 'chmod +x ./mvnw'
+        sh './mvnw test'
       }
     }
 
     stage('Build Docker Image') {
       steps {
         script {
-          docker.build("blog-post-api").run("--name blog-post-api -p 8080:8080 -d")
+          docker.build("blog-post-api")
         }
       }
     }
-
-//     stage('Push Docker Image') {
-//       steps {
-//         script {
-//           docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-//             docker.image("blog-post-api").push("${env.BRANCH_NAME}")
-//           }
-//         }
-//       }
-//     }
 
     stage('Clean WS') {
       steps {

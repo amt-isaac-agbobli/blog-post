@@ -12,7 +12,7 @@
 #    restart: on-failure
 services:
   app:
-    image: app
+    image: blog-post-api
     build:
       context: .
       dockerfile: Dockerfile
