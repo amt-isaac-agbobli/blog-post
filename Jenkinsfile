@@ -46,7 +46,7 @@ pipeline {
     stage('Build Docker Image') {
       steps {
         script {
-          docker.build("blog-post-api").run("--name blog-post-api -p 8080:8080 -d")
+          docker.build("blog-post-api").run("--name blog-post-api -p 8000:8000 -d")
         }
       }
     }
