@@ -44,12 +44,13 @@ pipeline {
     }
 
     stage('Build Docker Image') {
-      steps {
-        script {
-          docker.build("blog-post-api").run("--name blog-post-api -p 8000:8000 -d")
-        }
-      }
+        steps {
+          script {
+            sh 'docker stop blog-post-api || true && docker rm blog-post-api || true'
+            docker.build("blog-post-api").run("--name blog-post-api -p 8000:8000 -d")
     }
+  }
+}
 
 //     stage('Push Docker Image') {
 //       steps {
