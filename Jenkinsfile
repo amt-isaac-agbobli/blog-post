@@ -47,7 +47,7 @@ pipeline {
         steps {
           script {
             sh 'docker stop blog-post-api || true && docker rm blog-post-api || true'
-            docker.build("blog-post-api").run("--name blog-post-api -p 8000:8000 -d")
+            docker.build("blog-post-api").run("--name blog-post-api -p 9091:9091 -d")
     }
   }
 }
