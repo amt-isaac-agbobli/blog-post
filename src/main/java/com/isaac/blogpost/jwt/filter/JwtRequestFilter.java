@@ -1,7 +1,6 @@
 package com.isaac.blogpost.jwt.filter;
 
 import com.isaac.blogpost.entity.User;
-import com.isaac.blogpost.exception.HttpException;
 import com.isaac.blogpost.jwt.JwtService;
 import com.isaac.blogpost.repository.UserRepository;
 import jakarta.servlet.FilterChain;

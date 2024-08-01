@@ -1,0 +1,18 @@
+# This YAML file defines a Kubernetes ConfigMap for database configuration.
+
+apiVersion : v1
+# The API version used to create this ConfigMap.
+
+kind : ConfigMap
+# The kind of Kubernetes object being created, which is a ConfigMap.
+
+metadata:
+  name : db-config
+  # Metadata for the ConfigMap, including its name.
+
+data:
+  host : "postgres"
+  # The hostname of the PostgreSQL database.
+
+  dbName: "blog-post"
+  # The name of the PostgreSQL database.

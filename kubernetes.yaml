@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+# The API version used to create this Deployment.
+
+kind: Deployment
+# The kind of Kubernetes object being created, which is a Deployment.
+
+metadata:
+  name: blog-post-api
+  # Metadata for the Deployment, including its name.
+
+  namespace: default
+  # The namespace in which the Deployment is created.
+
+spec:
+  replicas: 2
+  # The number of pod replicas to be created.
+
+  selector:
+    matchLabels:
+      app: blog-post-api
+      # The label selector to identify the pods managed by this Deployment.
+
+  template:
+    metadata:
+      labels:
+        app: blog-post-api
+        # The labels to be applied to the pods created by this Deployment.
+
+    spec:
+      containers:
+        - name: blog-post-api
+          # The name of the container.
+
+          image: blog-post-api:latest
+          # The Docker image to be used for the container.
+
+          imagePullPolicy: Never
+          # The image pull policy for the container.
+
+          ports:
+            - containerPort: 8090
+              # The port on which the container listens.
+
+          resources:
+            limits:
+              memory: 512Mi
+              # The maximum amount of memory the container can use.
+
+              cpu: '1'
+              # The maximum amount of CPU the container can use.
+
+          env:
+            - name: DB_HOST
+              # The environment variable for the database host.
+
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  # The ConfigMap containing the database host.
+
+                  key: host
+                  # The key in the ConfigMap for the database host.
+
+            - name: DB_NAME
+              # The environment variable for the database name.
+
+              valueFrom:
+                configMapKeyRef:
+                  name: db-config
+                  # The ConfigMap containing the database name.
+
+                  key: dbName
+                  # The key in the ConfigMap for the database name.
+
+            - name: DB_USERNAME
+              # The environment variable for the database username.
+
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  # The Secret containing the database username.
+
+                  key: username
+                  # The key in the Secret for the database username.
+
+            - name: DB_PASSWORD
+              # The environment variable for the database password.
+
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  # The Secret containing the database password.
+
+                  key: password
+                  # The key in the Secret for the database password.
+
+---
+apiVersion: v1
+# The API version used to create this Service.
+
+kind: Service
+# The kind of Kubernetes object being created, which is a Service.
+
+metadata:
+  name: blog-post-api-balancer
+  # Metadata for the Service, including its name.
+
+spec:
+  selector:
+    app: blog-post-api
+    # The label selector to identify the pods targeted by this Service.
+
+  ports:
+    - protocol: TCP
+      # The protocol used by the Service.
+
+      port: 8090
+      # The port to expose to the outside.
+
+      targetPort: 8090
+      # The port the application is running on in the pods.
+
+  type: LoadBalancer
+  # The type of Service, which is a LoadBalancer.
